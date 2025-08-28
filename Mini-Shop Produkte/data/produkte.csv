@@ -1,6 +1,0 @@
-ProduktID,Produktname,Preis,Projektbetrieb,Geschäftsvorfall,ServiceIDs
-P001,Cloud-Sicherung,250,Projektgeschäft,2,S001;S002
-P002,Arbeitsplatz als Service,120,Betrieb,3,S003;S004
-P003,IT-Sicherheitsüberwachung,400,Betrieb,5,S005;S006;S007
-P004,DevOps-Pipeline Einrichtung,600,Projektgeschäft,4,S008;S009
-P005,Kollaborationssuite (Teams/SharePoint),80,Betrieb,1,S010
