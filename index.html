@@ -8,8 +8,15 @@
   <!-- Security Headers (client-side meta, besser serverseitig setzen) -->
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' data:; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'self' https://cdn.tailwindcss.com https://cdn.jsdelivr.net; object-src 'none'; base-uri 'self'; frame-ancestors 'self';">
-
+ <meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  connect-src 'self';
+  style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
+  script-src 'self' https://cdn.tailwindcss.com https://cdn.jsdelivr.net;
+  object-src 'none';
+  base-uri 'self';
+  frame-ancestors 'self';
+">
   <!-- Tailwind CSS (Cascading Style Sheets) via CDN: keine Installation nötig -->
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -147,4 +154,5 @@
   <script src="./script.js"></script>
 </body>
 </html>
+
 
