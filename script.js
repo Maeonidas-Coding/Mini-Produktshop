@@ -292,7 +292,12 @@ async function tryAutoloadFromDataFolder() {
   showToast('Automatisches Laden nicht möglich – bitte Dateien wählen.');
   return false;
 }
-
+function clearCart() {
+  state.cart = {};
+  saveCart();
+  renderCart();
+  showToast('Warenkorb geleert');
+}
 // ---------- Events ----------
 function wireEvents() {
   $$('.tab-btn').forEach(btn => btn.addEventListener('click', () => setActiveTab(btn.dataset.tab)));
@@ -356,3 +361,4 @@ function wireEvents() {
   wireEvents();
   setActiveTab('filter');
 })();
+
