@@ -8,23 +8,23 @@
   <!-- Security Headers (client-side meta, besser serverseitig setzen) -->
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
- <meta http-equiv="Content-Security-Policy" content="
-  default-src 'self';
-  connect-src 'self';
-  style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
-  script-src 'self' https://cdn.tailwindcss.com https://cdn.jsdelivr.net;
-  object-src 'none';
-  base-uri 'self';
-  frame-ancestors 'self';
-">
-  <!-- Tailwind CSS (Cascading Style Sheets) via CDN: keine Installation nötig -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    connect-src 'self';
+    style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
+    script-src 'self' https://cdn.tailwindcss.com https://cdn.jsdelivr.net;
+    object-src 'none';
+    base-uri 'self';
+    frame-ancestors 'self';
+  ">
+
+  <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- SheetJS (xlsx) zum Lesen von Excel/CSV im Browser -->
+  <!-- SheetJS (xlsx) -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
   <style>
-    /* Minimal-Fallbacks, falls CDN blockiert */
     .tw-hidden{display:none}
     .toast {
       position: fixed; right: 1rem; bottom: 1rem;
@@ -60,26 +60,15 @@
         </button>
       </div>
     </div>
- <!-- Vielen Dank für's reinschauen in meinen Code, Maeonidas lässt grüßen -->
+
     <!-- Tabs -->
     <div class="mt-4 flex items-center gap-2 border-b border-gray-200">
-      <button data-tab="filter"
-              class="tab-btn px-3 py-2 rounded-t bg-white border border-b-0 border-gray-200 text-sm font-medium">
-        Filter
-      </button>
-      <button data-tab="produkte"
-              class="tab-btn px-3 py-2 rounded-t bg-gray-50 border border-b-0 border-gray-200 text-sm font-medium">
-        Produkte
-      </button>
-      <button data-tab="services"
-              class="tab-btn px-3 py-2 rounded-t bg-gray-50 border border-b-0 border-gray-200 text-sm font-medium">
-        Services
-      </button>
-      <button data-tab="warenkorb"
-              class="tab-btn relative px-3 py-2 rounded-t bg-gray-50 border border-b-0 border-gray-200 text-sm font-medium">
+      <button data-tab="filter" class="tab-btn px-3 py-2 rounded-t bg-white border border-b-0 border-gray-200 text-sm font-medium">Filter</button>
+      <button data-tab="produkte" class="tab-btn px-3 py-2 rounded-t bg-gray-50 border border-b-0 border-gray-200 text-sm font-medium">Produkte</button>
+      <button data-tab="services" class="tab-btn px-3 py-2 rounded-t bg-gray-50 border border-b-0 border-gray-200 text-sm font-medium">Services</button>
+      <button data-tab="warenkorb" class="tab-btn relative px-3 py-2 rounded-t bg-gray-50 border border-b-0 border-gray-200 text-sm font-medium">
         Warenkorb
-        <span id="badge-cart"
-              class="absolute -right-2 -top-2 bg-rose-600 text-white text-xs rounded-full px-2 py-0.5">0</span>
+        <span id="badge-cart" class="absolute -right-2 -top-2 bg-rose-600 text-white text-xs rounded-full px-2 py-0.5">0</span>
       </button>
     </div>
 
@@ -94,9 +83,7 @@
 
     <div id="panel-produkte" class="tab-panel bg-white p-4 border border-gray-200 rounded-b tw-hidden">
       <div class="mb-3 flex items-center gap-2">
-        <input id="search-products" type="text" placeholder="Suche Produkte…"
-               class="w-full md:w-72 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring"
-        />
+        <input id="search-products" type="text" placeholder="Suche Produkte…" class="w-full md:w-72 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring" />
         <span class="text-sm text-gray-500" id="count-products"></span>
       </div>
       <div id="products-list" class="grid gap-3"></div>
@@ -105,11 +92,9 @@
     <div id="panel-services" class="tab-panel bg-white p-4 border border-gray-200 rounded-b tw-hidden">
       <div class="mb-2 text-sm text-gray-600" id="services-hint">Alle Services</div>
       <div class="mb-2 flex items-center gap-2">
-  <input id="search-services" type="text" placeholder="Suche Services…"
-         class="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring" />
-  <button id="btn-show-all-services"
-          class="px-3 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">Alle Services</button>
-</div>
+        <input id="search-services" type="text" placeholder="Suche Services…" class="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring" />
+        <button id="btn-show-all-services" class="px-3 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">Alle Services</button>
+      </div>
       <div id="services-list" class="grid gap-3"></div>
     </div>
 
@@ -127,26 +112,12 @@
   <!-- Toast -->
   <div id="toast" class="toast">Hinzugefügt</div>
 
-  <!-- Demo-Daten (Fallback) -->
+  <!-- Demo-Daten -->
   <script id="demo-json" type="application/json">
   {
-    "filters": [
-      {"Field":"Kategorie","Value":"Abo"},
-      {"Field":"Kategorie","Value":"Kauf"},
-      {"Field":"Region","Value":"DE"},
-      {"Field":"Region","Value":"AT"}
-    ],
-    "products": [
-      {"id":"P1","name":"Produkt A","Kategorie":"Abo","Region":"DE","price":19.90,"service_ids":"S1;S2"},
-      {"id":"P2","name":"Produkt B","Kategorie":"Kauf","Region":"DE","price":49.00,"service_ids":"S3"},
-      {"id":"P3","name":"Produkt C","Kategorie":"Abo","Region":"AT","price":29.50,"service_ids":"S2;S4"}
-    ],
-    "services": [
-      {"id":"S1","name":"Service 1","description":"Beschreibung 1"},
-      {"id":"S2","name":"Service 2","description":"Beschreibung 2"},
-      {"id":"S3","name":"Service 3","description":"Beschreibung 3"},
-      {"id":"S4","name":"Service 4","description":"Beschreibung 4"}
-    ]
+    "filters":[{"Field":"Kategorie","Value":"Abo"},{"Field":"Kategorie","Value":"Kauf"},{"Field":"Region","Value":"DE"},{"Field":"Region","Value":"AT"}],
+    "products":[{"id":"P1","name":"Produkt A","Kategorie":"Abo","Region":"DE","price":19.90,"service_ids":"S1;S2"},{"id":"P2","name":"Produkt B","Kategorie":"Kauf","Region":"DE","price":49.00,"service_ids":"S3"},{"id":"P3","name":"Produkt C","Kategorie":"Abo","Region":"AT","price":29.50,"service_ids":"S2;S4"}],
+    "services":[{"id":"S1","name":"Service 1","description":"Beschreibung 1"},{"id":"S2","name":"Service 2","description":"Beschreibung 2"},{"id":"S3","name":"Service 3","description":"Beschreibung 3"},{"id":"S4","name":"Service 4","description":"Beschreibung 4"}]
   }
   </script>
 
@@ -154,5 +125,3 @@
   <script src="./script.js"></script>
 </body>
 </html>
-
-
